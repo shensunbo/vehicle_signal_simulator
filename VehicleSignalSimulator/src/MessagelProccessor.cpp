@@ -17,7 +17,7 @@ SvmSignalProcessor::SvmSignalProcessor(std::string ip, int port, std::shared_ptr
 }
 
 SvmSignalProcessor::~SvmSignalProcessor() {
-    mylog(LogLevel::I, "~SvmSignalProcessor() start");
+    mylog(LogLevel::D, "~SvmSignalProcessor() start");
     close(m_socket);
 
     if (m_cmd_line_input_thread != nullptr && m_cmd_line_input_thread->joinable()) {
@@ -26,7 +26,7 @@ SvmSignalProcessor::~SvmSignalProcessor() {
         m_cmd_line_input_thread = nullptr;
     }
 
-    mylog(LogLevel::I, "~SvmSignalProcessor() end");
+    mylog(LogLevel::D, "~SvmSignalProcessor() end");
 }
 
 void SvmSignalProcessor::clientRun(){
