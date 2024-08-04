@@ -168,26 +168,26 @@ int SvmSignalProcessor::cmdProcess() {
 }
 
 void SvmSignalProcessor::SVM_HMI_Request_Active_Guideline_Process() const {
-    m_interface_adapter->SVM_HMI_Request_Active_Guideline_Process(m_svm_signal_data_recv.value);
+    m_interface_adapter->RequestActiveGuideline(m_svm_signal_data_recv.value);
 }
 
 void SvmSignalProcessor::SVM_HMI_Request_Enable_Transparent_Car_Model_Process() const {
-    m_interface_adapter->SVM_HMI_Request_Enable_Transparent_Car_Model_Process(m_svm_signal_data_recv.value);
+    m_interface_adapter->RequestEnableTransparentCarModel(m_svm_signal_data_recv.value);
 }
 
 void SvmSignalProcessor::SteeringWheelAngleProcess() const{
     int8_t radians = 0;
     int32_t degrees = 0;
     memcpy(&radians, &m_svm_signal_data_recv.value, sizeof(radians));
-    mylog(LogLevel::D, "SteeringWheelAngleProcess %d", radians);
+    mylog(LogLevel::D, "SetSteeringWheelAngle %d", radians);
     degrees = radians * 57; //Radians to degrees
-    m_interface_adapter->SteeringWheelAngleProcess(degrees);
+    m_interface_adapter->SetSteeringWheelAngle(degrees);
 }
 
 void SvmSignalProcessor::EachWheelPulseSignalProcess() const{
-    mylog(LogLevel::D, "EachWheelPulseSignalProcess");
-    m_interface_adapter->EachWheelPulseSignalProcess(m_svm_signal_data_recv.value, m_svm_signal_data_recv.data[0]);
+    mylog(LogLevel::D, "SetEachWheelPulseSignal");
+    m_interface_adapter->SetEachWheelPulseSignal(m_svm_signal_data_recv.value, m_svm_signal_data_recv.data[0]);
 }
 void SvmSignalProcessor::GearProcess() const{
-    m_interface_adapter->GearProcess(m_svm_signal_data_recv.value);
+    m_interface_adapter->SetGear(m_svm_signal_data_recv.value);
 }
