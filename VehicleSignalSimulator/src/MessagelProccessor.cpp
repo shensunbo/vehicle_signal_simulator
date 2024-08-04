@@ -29,27 +29,23 @@ SvmSignalProcessor::~SvmSignalProcessor() {
     mylog(LogLevel::I, "~SvmSignalProcessor() end");
 }
 
-/**
- * @brief Runs the SvmSignalProcessor.
- * 
- * This function initializes UDP server, processes incoming data, and commands.
- */
-void SvmSignalProcessor::run() {
+void SvmSignalProcessor::clientRun(){
     if(consoleCamImpl.init()){
         mylog(LogLevel::E, "consoleCamImpl init failed");
         MY_ASSERT(0, "consoleCamImpl init failed");
         return;
     }
 
+    //create cmd line input processor thread
+    auto cmdLineProcessor = [this]() { return this->consoleCamImpl.execute(); };
+    m_cmd_line_input_thread =  new std::thread(cmdLineProcessor);
+}
+void SvmSignalProcessor::serverRun(){
     if(udpServerInit()){
         mylog(LogLevel::E, "udpServerInit failed");
         MY_ASSERT(0, "udpServerInit failed");
         return;
     }
-
-    //create cmd line input processor thread
-    auto cmdLineProcessor = [this]() { return this->consoleCamImpl.execute(); };
-    m_cmd_line_input_thread =  new std::thread(cmdLineProcessor);
 
     int bufsize = sizeof(SvmSignalData);
     char buf[bufsize] = {0};

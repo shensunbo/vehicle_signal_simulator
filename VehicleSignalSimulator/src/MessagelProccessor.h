@@ -15,8 +15,9 @@ class SvmSignalProcessor{
         SvmSignalProcessor() = delete;
         ~SvmSignalProcessor();
 
-        void run();
-        void end();
+        void clientRun();
+        void serverRun();
+        void end(); //only can be called by client, use SIMULATOR_EXIT message
     private:
         int udpServerInit();
         int udpDatagramParse(const char* buf, int len);

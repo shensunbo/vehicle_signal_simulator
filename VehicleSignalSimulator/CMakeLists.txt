@@ -21,9 +21,25 @@ set(SOURCES
     src/ConsoleCamImpl.cpp
     src/MessagelProccessor.cpp
     src/dep/DemoInterfaceAdapter..cpp
-    src/test.cpp
+    src/main.cpp
 )
 
 add_executable(ConsoleCameraApp ${SOURCES})
-
 target_include_directories(ConsoleCameraApp PRIVATE ${INC_DIR} src)
+
+#unit test
+enable_testing()
+
+set(GTEST_DEP_SOURCES     
+    src/ConsoleCamImpl.cpp
+    src/MessagelProccessor.cpp
+)
+
+add_executable(MessagelProccessorTest ${GTEST_DEP_SOURCES} src/MessagelProccessor_test.cpp)
+
+target_include_directories(MessagelProccessorTest PRIVATE ${INC_DIR} src)
+target_link_directories(MessagelProccessorTest PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/lib/gtest)
+target_link_libraries(MessagelProccessorTest gtest gtest_main gmock gmock_main)
+
+set_target_properties(MessagelProccessorTest PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+add_test(NAME MessagelProccessorTest COMMAND ${CMAKE_BINARY_DIR}/bin/MessagelProccessorTest)

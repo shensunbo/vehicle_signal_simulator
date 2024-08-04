@@ -6,7 +6,8 @@
 int main(int argc, char** argv) {
     SvmSignalProcessor svmSignalProcessor("0.0.0.0", 10000, std::make_shared<DemoInterfaceAdapter>());
 
-    svmSignalProcessor.run();
+    svmSignalProcessor.clientRun();
+    svmSignalProcessor.serverRun();
 
     return 0;
 }

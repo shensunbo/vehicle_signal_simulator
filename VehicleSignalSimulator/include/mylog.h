@@ -1,5 +1,4 @@
-#ifndef __MYLOG_H__
-#define __MYLOG_H__
+#pragma once
 
 #include <iostream>
 #include <cerrno>
@@ -46,6 +45,3 @@ enum class LogLevel {
             assert(cond); \
         } \
     } while(0)
-
-
-#endif // __MYLOG_H__
