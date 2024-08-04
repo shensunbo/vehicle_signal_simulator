@@ -14,12 +14,13 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
 # add_definitions(-DNDEBUG)
 
 # Add dep inc path
-set(INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+set(INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_SOURCE_DIR}/src/dep)
 
 # add source file need to compile 
 set(SOURCES 
     src/ConsoleCamImpl.cpp
     src/MessagelProccessor.cpp
+    src/dep/DemoInterfaceAdapter..cpp
     src/test.cpp
 )
 
