@@ -32,8 +32,6 @@ class SvmSignalProcessor{
         void EachWheelPulseSignalProcess() const;
         void GearProcess() const;
 
-    //tools
-    bool checkHmiClientState();
     private:
         SvmSignalData m_svm_signal_data_recv;
         int m_socket;
