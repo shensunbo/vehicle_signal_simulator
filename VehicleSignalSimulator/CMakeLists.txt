@@ -28,18 +28,31 @@ add_executable(ConsoleCameraApp ${SOURCES})
 target_include_directories(ConsoleCameraApp PRIVATE ${INC_DIR} src)
 
 #unit test
-enable_testing()
+include(${CMAKE_CURRENT_SOURCE_DIR}/CMake/unit_test_helper.cmake)
 
 set(GTEST_DEP_SOURCES     
     src/ConsoleCamImpl.cpp
     src/MessagelProccessor.cpp
 )
 
-add_executable(MessagelProccessorTest ${GTEST_DEP_SOURCES} src/MessagelProccessor_test.cpp)
+set(GTEST_DEP_LIBS     
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/gtest/libgtest.a
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/gtest/libgmock.a
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/gtest/libgtest_main.a
+    ${CMAKE_CURRENT_SOURCE_DIR}/lib/gtest/libgmock_main.a
+)
 
-target_include_directories(MessagelProccessorTest PRIVATE ${INC_DIR} src)
-target_link_directories(MessagelProccessorTest PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/lib/gtest)
-target_link_libraries(MessagelProccessorTest gtest gtest_main gmock gmock_main)
-
-set_target_properties(MessagelProccessorTest PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-add_test(NAME MessagelProccessorTest COMMAND ${CMAKE_BINARY_DIR}/bin/MessagelProccessorTest)
+# MessagelProccessorTest
+add_new_test(
+    TEST_NAME
+    MessagelProccessorTest
+    SRCS
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/MessagelProccessor_test.cpp
+    DEP_SRCS
+        ${GTEST_DEP_SOURCES}
+    HEADER_DIR
+        ${INC_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+    LIB_DEP
+        ${GTEST_DEP_LIBS}
+)
